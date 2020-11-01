@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratorio5_EDII", "Labora
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratorio_3_EDII", "..\Laboratorio4_EDII\Laboratorio3_EDII\Laboratorio_3_EDII\Laboratorio_3_EDII\Laboratorio_3_EDII.csproj", "{608D8969-C03B-4F80-AF34-15F904FC2FB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CipherConsole", "CipherConsole\CipherConsole.csproj", "{5DF8CEFA-FBF2-4285-B16E-B73FA8398DC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +21,9 @@ Global
 		{608D8969-C03B-4F80-AF34-15F904FC2FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608D8969-C03B-4F80-AF34-15F904FC2FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608D8969-C03B-4F80-AF34-15F904FC2FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF8CEFA-FBF2-4285-B16E-B73FA8398DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF8CEFA-FBF2-4285-B16E-B73FA8398DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF8CEFA-FBF2-4285-B16E-B73FA8398DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF8CEFA-FBF2-4285-B16E-B73FA8398DC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
