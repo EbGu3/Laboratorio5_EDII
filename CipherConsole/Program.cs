@@ -1,12 +1,15 @@
 ﻿using System;
+using Laboratorio_3_EDII.Manager;
 
 namespace CipherConsole
 {
-    class MainClass
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-          
+            
+
+            
             Console.WriteLine("Cifrado de llave publica");
             Console.WriteLine("************************\n");
             Console.WriteLine("\b 1) Cifrado Cesar");
@@ -16,7 +19,7 @@ namespace CipherConsole
             Console.Write("\t Escoja una opción para cifrar: ");
             var OptionToCipher = Convert.ToInt16(Console.ReadLine());
 
-            switch(OptionToCipher)
+            switch (OptionToCipher)
             {
                 case 1:
                     Console.Clear();
@@ -71,8 +74,6 @@ namespace CipherConsole
                     Console.ReadKey();
                     break;
             }
-            
-
 
         }
     }
