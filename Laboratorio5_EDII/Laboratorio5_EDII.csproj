@@ -8,4 +8,16 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarm>$(NoWarm);1591</NoWarm>
+  </PropertyGroup>
+  
 </Project>
+
