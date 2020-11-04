@@ -69,5 +69,10 @@ namespace Laboratorio5_EDII.Models
             }
             return false;
         }
+
+                
+        public bool TypeOfFile(Required values) => (Path.GetExtension(values.File.FileName).Equals(".txt")) == true;
+        public bool ContainsData(Required values) => (values.File == null) == false;
+        
     }
 }
