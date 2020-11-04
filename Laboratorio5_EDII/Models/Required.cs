@@ -2,7 +2,7 @@
 
 namespace Laboratorio5_EDII.Models
 {
-    public class Requisitos : IRequestModel<string>
+    public class Required : IRequestModel<string>
     {
         public IFormFile File { get; set; }
         public string Key { get; set; }

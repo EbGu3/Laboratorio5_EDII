@@ -14,9 +14,14 @@ namespace Laboratorio5_EDII.Controllers
         /// <param name="method"></param>
         /// <returns></returns>
         [HttpPost, Route("{method}")]
-        public ActionResult Cifrado(Requisitos req, string method)
+        public ActionResult Cifrado(Required values, string method)
         {
-            
+            cipherType cipherType = new cipherType();
+            var cipher = cipherType.Get_Cipher(method,values);
+            if (cipher)
+            {
+
+            }
             return Ok();
         }
     }
