@@ -81,7 +81,7 @@ namespace Laboratorio5_EDII.Models
                         else { return true; }
                         break;
                     case "zigzag":
-                        if (values.Niveles == 0) { return false}
+                        if (values.Niveles == 0) { return false; }
                         else { return true; }
                         break;
                     case "ruta":
