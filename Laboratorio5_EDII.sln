@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Laboratorio5_EDII", "Labora
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CipherConsole", "CipherConsole\CipherConsole.csproj", "{F4F6D27D-0E16-4FBB-88B2-F1D0050271F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib_Cipher", "Lib_Cipher\Lib_Cipher.csproj", "{DCBDAA67-FD15-4D8A-BEBC-47D4A835C833}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{F4F6D27D-0E16-4FBB-88B2-F1D0050271F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4F6D27D-0E16-4FBB-88B2-F1D0050271F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4F6D27D-0E16-4FBB-88B2-F1D0050271F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCBDAA67-FD15-4D8A-BEBC-47D4A835C833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCBDAA67-FD15-4D8A-BEBC-47D4A835C833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCBDAA67-FD15-4D8A-BEBC-47D4A835C833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCBDAA67-FD15-4D8A-BEBC-47D4A835C833}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
