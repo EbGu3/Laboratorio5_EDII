@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Lib_Cipher;
 using System.Text;
+using System;
 
 namespace Laboratorio5_EDII.Models
 {
@@ -58,26 +59,22 @@ namespace Laboratorio5_EDII.Models
         /// </summary>
         /// <param name="path"></param>
         /// <param name="key"></param>
-        /// <param name="fileName"></param>
-        public void Cipher_Cesar(string path, string key, string fileName)
+        /// <param name="file"></param>
+        public void Cipher_Cesar(string path, string key)
         {
-            var finalTxt = string.Empty;
-            var test = !(int.TryParse(key, out int testeo));
             Cesar cesar = new Cesar();
-            using (var reader = new StreamReader(path, Encoding.ASCII, true))
-            {
-                var txtInicio = reader.ReadToEnd();
-                if (!(int.TryParse(key, out int Key)))
-                {
-                    finalTxt = cesar.CipherCesarLoop(txtInicio, Key);
-                }
-            }
-            save_File($"Cipher/" + fileName, finalTxt);
+            cesar.Cipher_Cesar(path, key, true);
         }
 
-        public void Decipher_Cesar()
+        /// <summary>
+        /// Desifrado cesar
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="key"></param>
+        public void Decipher_Cesar(string path, string key)
         {
-
+            Cesar cesar = new Cesar();
+            cesar.Cipher_Cesar(path, key, false);
         }
 
         public void Cipher_ZigZag(string fileName, string path, int levels)
