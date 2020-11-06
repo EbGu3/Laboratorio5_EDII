@@ -15,40 +15,52 @@ namespace Laboratorio5_EDII.Models
         /// <param name="key"></param>
         /// <param name="file"></param>
         /// <returns></returns>
-        public bool Get_Cipher(string Medodo, string key, IFormFile file)
+        public bool Get_Cipher(string Medodo, Required values)
         {
-            if (key is null)
-            {
-                throw new System.ArgumentNullException(nameof(key));
-            }
-
-            if ((TypeOfFile(file.FileName) == true) && (ContainsData(file) == true))
+            if ((TypeOfFile(values.File.FileName) == true) && (ContainsData(values.File) == true))
             {
                 switch (Medodo.ToLower())
                 {
                     case "cesar":
-                        if (key == null || int.TryParse(key, out int keyOut)) { return false; }
+                        if (values.Key == null || int.TryParse(values.Key, out int keyOut)) { return false; }
                         else
                         {
                             FileHandeling fileHandeling = new FileHandeling();
                             fileHandeling.Create_File_Import();
-                            var new_Path = fileHandeling.Import_FileAsync(file);
-                            fileHandeling.Cipher_Cesar(new_Path.Result, key);
+                            var new_Path = fileHandeling.Import_FileAsync(values.File);
+                            fileHandeling.Cipher_Cesar(new_Path.Result, values.Key);
 
                             return true;
                         }
                     case "zigzag":
-                        var level = int.TryParse(key, out int lvl);
+                        var level = int.TryParse(values.Key, out int lvl);
                         if (!level || lvl <= 0) { return false; }
                         else
                         {
                             FileHandeling fileHandeling = new FileHandeling();
                             fileHandeling.Create_File_Import();
-                            var new_Path = fileHandeling.Import_FileAsync(file);
-                            fileHandeling.Cipher_ZigZag(new_Path.Result, lvl, file);
+                            var new_Path = fileHandeling.Import_FileAsync(values.File);
+                            fileHandeling.Cipher_ZigZag(new_Path.Result, lvl, values.File);
                             return true;
                         }
                     case "ruta":
+                        var matrix = values.Key.Split(",");
+                        try
+                        {
+                            if (int.Parse(matrix[0]) > 0 && int.Parse(matrix[1]) > 0)
+                            {
+                                var m = int.Parse(matrix[0]);
+                                var n = int.Parse(matrix[1]);
+                                FileHandeling fileHandeling = new FileHandeling();
+                                fileHandeling.Cipher_Route(m,n, values.File, values.Route);
+
+                            }
+                        }
+                        catch (System.Exception)
+                        {
+                            return false;
+                        }
+                        
                         return true;
                 }
             }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.IO;
 using Lib_Cipher;
+using System.Text;
 
 namespace Laboratorio5_EDII.Models
 {
@@ -100,7 +101,7 @@ namespace Laboratorio5_EDII.Models
                 }
             }
             ZigZag zigZag = new ZigZag();
-            var txtDesifrado = zigZag.Cipher(fileByte, levels); 
+            var txtDesifrado = zigZag.Cipher(fileByte, levels);
             var txtResultado = new byte[1];
             txtResultado = new byte[txtDesifrado.Length];
             txtResultado = txtDesifrado;
@@ -143,14 +144,45 @@ namespace Laboratorio5_EDII.Models
             }
         }
 
-        public void Cipher_Route()
+        /// <summary>
+        /// Cifrado ruta
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
+        /// <param name="file"></param>
+        /// <param name="route"></param>
+        public void Cipher_Route(int m, int n, IFormFile file, string route)
         {
-
+            Route route1 = new Route(m, n, Get_allText(file));
+            if (route.ToLower().Equals("vertical"))
+            {
+                route1.Cipher_Vertical();
+            }
+            else if (route.ToLower().Equals("espiral"))
+            {
+                route1.Cipher_Spiral();
+            }
         }
 
         public void Decipher_Route()
         {
 
+        }
+
+        /// <summary>
+        /// Busca y guarda el string del archivo
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public string Get_allText(IFormFile file)
+        {
+            var result = new StringBuilder();
+            using (var reader = new StreamReader(file.OpenReadStream()))
+            {
+                while (reader.Peek() >= 0)
+                    result.AppendLine(reader.ReadLine());
+            }
+            return result.ToString();
         }
     }
 }
