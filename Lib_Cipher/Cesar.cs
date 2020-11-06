@@ -7,18 +7,15 @@ namespace Lib_Cipher
 {
     public class Cesar
     {
-        public void Cipher_Cesar(string path, string key, bool option, string extention)
+        public void Cipher_Cesar(string path, string key, bool option, string path_Exported)
         {
             int bufferLength = 100;
             var dicctionary = Dicctionary_Cesar(key, option);
             using (var reader = new BinaryReader(File.Open(path, FileMode.Open)))
             {
-                var name = Path.GetFileNameWithoutExtension(path);
-                var old_name = Path.GetFileName(path);
-                path = path.Replace(old_name, string.Empty);
-                var new_Path = Path.Combine(path, name + extention);
-                using (var writeStream = new FileStream(new_Path, FileMode.OpenOrCreate))
+                using (var writeStream = new FileStream(path_Exported, FileMode.OpenOrCreate))
                 {
+
                     using (var writer = new BinaryWriter(writeStream))
                     {
                         var byteBuffer = new byte[bufferLength];

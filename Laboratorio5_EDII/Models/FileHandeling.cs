@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using System.IO;
 using Lib_Cipher;
-using System.Text;
-using System;
 
 namespace Laboratorio5_EDII.Models
 {
+    /// <summary>
+    /// Manejo del archivo cifrado o desifrado
+    /// </summary>
     public class FileHandeling
     {
         /// <summary>
@@ -59,12 +60,11 @@ namespace Laboratorio5_EDII.Models
         /// </summary>
         /// <param name="path"></param>
         /// <param name="key"></param>
-        /// <param name="file"></param>
         public void Cipher_Cesar(string path, string key)
         {
             Cesar cesar = new Cesar();
-            var new_Path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path));
-            cesar.Cipher_Cesar(new_Path, key, true, ".csr");
+            var path_exported = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path) + ".csr");
+            cesar.Cipher_Cesar(path, key, true, path_exported);
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace Laboratorio5_EDII.Models
         public void Decipher_Cesar(string path, string key)
         {
             Cesar cesar = new Cesar();
-            var new_Path = Path.Combine($"Decipher", Path.GetFileNameWithoutExtension(path));
-            cesar.Cipher_Cesar(new_Path, key, false, ".txt");
+            var path_exported = Path.Combine($"Decipher", Path.GetFileNameWithoutExtension(path) + ".txt");
+            cesar.Cipher_Cesar(path, key, false, path_exported);
         }
 
         public void Cipher_ZigZag(string fileName, string path, int levels)
