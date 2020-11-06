@@ -17,14 +17,15 @@ namespace Laboratorio5_EDII.Controllers
         public ActionResult Cifrado(Required values, string method)
         {
             cipherType cipherType = new cipherType();
-            var cipher = cipherType.Get_Cipher(method,values);
-            var file = cipherType.TypeOfFile(values);
-            var fileData = cipherType.ContainsData(values);
-            if (cipher && file && fileData)
+            var cipher = cipherType.Get_Cipher(values,method);
+            if (cipher)
             {
-
+                return Ok("Archivo cifrado exitosamente.");
             }
-            return Ok();
+            else
+            {
+                return StatusCode(500, "Algún parametro se encuentra erroneo.");
+            }
         }
     }
 }

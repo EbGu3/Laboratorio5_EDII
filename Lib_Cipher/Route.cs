@@ -1,6 +1,6 @@
 ﻿namespace Lib_Cipher
 {
-    class Route
+    public class Route
     {
         public void Cipher_Route()
         {

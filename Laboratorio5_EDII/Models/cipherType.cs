@@ -1,33 +1,46 @@
-﻿using System.IO;
+﻿using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Laboratorio5_EDII.Models
 {
     public class cipherType
     {
         public bool Get_Cipher(Required values, string Medodo)
-        { 
-            if((TypeOfFile(values) == true) && (ContainsData(values) == true))
+        {
+            if ((TypeOfFile(values.File.FileName) == true) && (ContainsData(values.File) == true))
             {
                 switch (Medodo.ToLower())
                 {
                     case "cesar":
-                        if (values.Key == null || !(int.TryParse(values.Key, out int Key))) { return false; }
-                        else { return true; }
-                        break;
+                        if (values.Key == null || int.TryParse(values.Key, out int Key)) { return false; }
+                        else
+                        {
+                            FileHandeling fileHandeling = new FileHandeling();
+                            fileHandeling.Create_File_Import();
+                            var new_Path = fileHandeling.Import_FileAsync(values.File);
+                            fileHandeling.Cipher_Cesar(new_Path.Result, values.Key, values.File.FileName);
+
+                            return true;
+                        }
                     case "zigzag":
-                        if (values.Niveles == 0) { return false; }
-                        else { return true; }
-                        break;
+                        if (values.levels == 0) { return false; }
+                        else
+                        {
+                            FileHandeling fileHandeling = new FileHandeling();
+                            fileHandeling.Create_File_Import();
+                            var new_Path = fileHandeling.Import_FileAsync(values.File);
+                            fileHandeling.Cipher_ZigZag(values.File.FileName, new_Path.Result, values.levels);
+                            return true;
+                        }
                     case "ruta":
                         if (values.Reloj != "Abajo") { return false; }
                         else { return true; }
-                        break;
                 }
             }
             return false;
         }
-        public bool TypeOfFile(Required values) => (Path.GetExtension(values.File.FileName).Equals(".txt"));
-        public bool ContainsData(Required values) => (values.File == null);
-        
+        public bool TypeOfFile(string value) => (Path.GetExtension(value).Equals(".txt"));
+        public bool ContainsData(IFormFile values) => (values != null);
+
     }
 }

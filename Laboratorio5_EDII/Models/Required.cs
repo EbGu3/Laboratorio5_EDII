@@ -10,6 +10,6 @@ namespace Laboratorio5_EDII.Models
         public string Name { get; set; }
         public string Reloj { get; set; }
         public int Ancho { get; set; }
-        public int Niveles { get; set; }
+        public int levels { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Lib_Cipher
 {
-    class ZigZag
+    public class ZigZag
     {
         public void Cipher_ZigZag()
         { 
