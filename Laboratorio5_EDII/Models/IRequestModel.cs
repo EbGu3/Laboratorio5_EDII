@@ -6,7 +6,5 @@ namespace Laboratorio5_EDII.Models
     {
         IFormFile File { get; set; }
         T Key { get; set; }
-        string Name { get; set; }
-        public string Cifrado { get; set; }
     }
 }

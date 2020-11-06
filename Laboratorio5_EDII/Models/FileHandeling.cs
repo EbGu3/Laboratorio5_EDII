@@ -79,44 +79,61 @@ namespace Laboratorio5_EDII.Models
             cesar.Cipher_Cesar(path, key, false, path_exported);
         }
 
-        public void Cipher_ZigZag(string fileName, string path, int levels)
+        /// <summary>
+        /// Cifrado ZigZag
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="path"></param>
+        /// <param name="levels"></param>
+        /// <param name="formFile"></param>
+        public void Cipher_ZigZag(string fileName, string path, int levels, IFormFile formFile)
         {
-            var txtFinal = string.Empty;
-
-            save_File($"Cipher/" + fileName, txtFinal);
+            var fileByte = new byte[formFile.Length];
+            var i = 0;
+            using (var lectura = new BinaryReader(File.Open(path, FileMode.Open)))
+            {
+                while (lectura.BaseStream.Position != lectura.BaseStream.Length)
+                {
+                    fileByte[i] = lectura.ReadByte();
+                    i++;
+                }
+            }
+            ZigZag zigZag = new ZigZag();
+            var txtDesifrado = zigZag.Cipher_ZigZag(fileByte, levels); 
+            var txtResultado = new byte[1];
+            txtResultado = new byte[txtDesifrado.Length];
+            txtResultado = txtDesifrado;
+            var new_Path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path) + ".zz");
+            save_File(new_Path, txtResultado);
         }
 
+        private void save_File(string new_Path, byte[] txtResultado)
+        {
+            using (var writeStream = new FileStream(new_Path, FileMode.OpenOrCreate))
+            {
+                using (var writer = new BinaryWriter(writeStream))
+                {
+                    writer.Write(txtResultado);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Desifrado ZigZag
+        /// </summary>
         public void Decipher_ZigZag()
         {
 
         }
 
-        public void Cipher_Route(string fileName)
+        public void Cipher_Route()
         {
-            var txtFinal = string.Empty;
 
-            save_File($"Cipher/" + fileName, txtFinal);
         }
 
         public void Decipher_Route()
         {
 
-        }
-
-        /// <summary>
-        /// Guarda el archivo cifrado
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="txtFinal"></param>
-        public void save_File(string path, string txtFinal)
-        {
-            using (var writeStream = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                using (var writer = new BinaryWriter(writeStream))
-                {
-                    writer.Write(txtFinal);
-                }
-            }
         }
     }
 }

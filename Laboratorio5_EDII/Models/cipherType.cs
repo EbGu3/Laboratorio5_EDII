@@ -29,13 +29,14 @@ namespace Laboratorio5_EDII.Models
                             return true;
                         }
                     case "zigzag":
-                        if (values.levels == 0) { return false; }
+                        var level = int.TryParse(values.Key, out int lvl);
+                        if (!level || lvl <= 0) { return false; }
                         else
                         {
                             FileHandeling fileHandeling = new FileHandeling();
                             fileHandeling.Create_File_Import();
                             var new_Path = fileHandeling.Import_FileAsync(values.File);
-                            fileHandeling.Cipher_ZigZag(values.File.FileName, new_Path.Result, values.levels);
+                            fileHandeling.Cipher_ZigZag(values.File.FileName, new_Path.Result, lvl, values.File);
                             return true;
                         }
                     case "ruta":
