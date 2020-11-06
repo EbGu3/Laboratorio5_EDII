@@ -18,9 +18,9 @@ namespace Laboratorio5_EDII.Models
             {
                 Directory.CreateDirectory($"Upload");
             }
-            if (!Directory.Exists($"Compress"))
+            if (!Directory.Exists($"Cipher"))
             {
-                Directory.CreateDirectory($"Compress");
+                Directory.CreateDirectory($"Cipher");
             }
         }
         /// <summary>
@@ -32,9 +32,9 @@ namespace Laboratorio5_EDII.Models
             {
                 Directory.CreateDirectory($"Upload");
             }
-            if (!Directory.Exists($"Decompress"))
+            if (!Directory.Exists($"Decipher"))
             {
-                Directory.CreateDirectory($"Decompress");
+                Directory.CreateDirectory($"Decipher");
             }
         }
         /// <summary>
@@ -63,7 +63,8 @@ namespace Laboratorio5_EDII.Models
         public void Cipher_Cesar(string path, string key)
         {
             Cesar cesar = new Cesar();
-            cesar.Cipher_Cesar(path, key, true);
+            var new_Path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path));
+            cesar.Cipher_Cesar(new_Path, key, true, ".csr");
         }
 
         /// <summary>
@@ -74,7 +75,8 @@ namespace Laboratorio5_EDII.Models
         public void Decipher_Cesar(string path, string key)
         {
             Cesar cesar = new Cesar();
-            cesar.Cipher_Cesar(path, key, false);
+            var new_Path = Path.Combine($"Decipher", Path.GetFileNameWithoutExtension(path));
+            cesar.Cipher_Cesar(new_Path, key, false, ".txt");
         }
 
         public void Cipher_ZigZag(string fileName, string path, int levels)

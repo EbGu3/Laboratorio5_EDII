@@ -5,6 +5,12 @@ namespace Laboratorio5_EDII.Models
 {
     public class cipherType
     {
+        /// <summary>
+        /// Obtiene la forma del cifrado
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="Medodo"></param>
+        /// <returns></returns>
         public bool Get_Cipher(Required values, string Medodo)
         {
             if ((TypeOfFile(values.File.FileName) == true) && (ContainsData(values.File) == true))
@@ -18,7 +24,7 @@ namespace Laboratorio5_EDII.Models
                             FileHandeling fileHandeling = new FileHandeling();
                             fileHandeling.Create_File_Import();
                             var new_Path = fileHandeling.Import_FileAsync(values.File);
-                            fileHandeling.Cipher_Cesar(new_Path.Result, values.Key, values.File.FileName);
+                            fileHandeling.Cipher_Cesar(new_Path.Result, values.Key);
 
                             return true;
                         }
