@@ -3,45 +3,53 @@ using System.IO;
 
 namespace Laboratorio5_EDII.Models
 {
+    /// <summary>
+    /// División entre cifrado y desifrado
+    /// </summary>
     public class cipherType
     {
         /// <summary>
         /// Obtiene la forma del cifrado
         /// </summary>
-        /// <param name="values"></param>
         /// <param name="Medodo"></param>
+        /// <param name="key"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
-        public bool Get_Cipher(Required values, string Medodo)
+        public bool Get_Cipher(string Medodo, string key, IFormFile file)
         {
-            if ((TypeOfFile(values.File.FileName) == true) && (ContainsData(values.File) == true))
+            if (key is null)
+            {
+                throw new System.ArgumentNullException(nameof(key));
+            }
+
+            if ((TypeOfFile(file.FileName) == true) && (ContainsData(file) == true))
             {
                 switch (Medodo.ToLower())
                 {
                     case "cesar":
-                        if (values.Key == null || int.TryParse(values.Key, out int Key)) { return false; }
+                        if (key == null || int.TryParse(key, out int keyOut)) { return false; }
                         else
                         {
                             FileHandeling fileHandeling = new FileHandeling();
                             fileHandeling.Create_File_Import();
-                            var new_Path = fileHandeling.Import_FileAsync(values.File);
-                            fileHandeling.Cipher_Cesar(new_Path.Result, values.Key);
+                            var new_Path = fileHandeling.Import_FileAsync(file);
+                            fileHandeling.Cipher_Cesar(new_Path.Result, key);
 
                             return true;
                         }
                     case "zigzag":
-                        var level = int.TryParse(values.Key, out int lvl);
+                        var level = int.TryParse(key, out int lvl);
                         if (!level || lvl <= 0) { return false; }
                         else
                         {
                             FileHandeling fileHandeling = new FileHandeling();
                             fileHandeling.Create_File_Import();
-                            var new_Path = fileHandeling.Import_FileAsync(values.File);
-                            fileHandeling.Cipher_ZigZag(new_Path.Result, lvl, values.File);
+                            var new_Path = fileHandeling.Import_FileAsync(file);
+                            fileHandeling.Cipher_ZigZag(new_Path.Result, lvl, file);
                             return true;
                         }
                     case "ruta":
-                        if (values.Reloj != "Abajo") { return false; }
-                        else { return true; }
+                        return true;
                 }
             }
             return false;
@@ -50,41 +58,33 @@ namespace Laboratorio5_EDII.Models
         /// <summary>
         /// Obtiene la forma del cifrado
         /// </summary>
-        /// <param name="values"></param>
-        /// <param name="Medodo"></param>
+        /// <param name="file"></param>
+        /// <param name="Key"></param>
         /// <returns></returns>
-        public bool Get_Decipher(Required values, string Medodo)
+        public bool Get_Decipher(IFormFile file, string Key)
         {
-            if ((TypeOfFile(values.File.FileName) == true) && (ContainsData(values.File) == true))
+            var extention = Path.GetExtension(file.FileName);
+            switch (extention)
             {
-                switch (Medodo.ToLower())
-                {
-                    case "cesar":
-                        if (values.Key == null || int.TryParse(values.Key, out int Key)) { return false; }
-                        else
-                        {
-                            FileHandeling fileHandeling = new FileHandeling();
-                            fileHandeling.Create_File_Import();
-                            var new_Path = fileHandeling.Import_FileAsync(values.File);
-                            fileHandeling.Decipher_Cesar(new_Path.Result, values.Key);
-
-                            return true;
-                        }
-                    case "zigzag":
-                        var level = int.TryParse(values.Key, out int lvl);
-                        if (!level || lvl <= 0) { return false; }
-                        else
-                        {
-                            FileHandeling fileHandeling = new FileHandeling();
-                            fileHandeling.Create_File_Import();
-                            var new_Path = fileHandeling.Import_FileAsync(values.File);
-                            fileHandeling.Decipher_ZigZag(lvl, values.File, new_Path.Result);
-                            return true;
-                        }
-                    case "ruta":
-                        if (values.Reloj != "Abajo") { return false; }
-                        else { return true; }
-                }
+                case ".csr":
+                    FileHandeling fileHandeling = new FileHandeling();
+                    fileHandeling.Create_File_Export();
+                    var new_Path = fileHandeling.Import_FileAsync(file);
+                    fileHandeling.Decipher_Cesar(new_Path.Result, Key);
+                    return true;
+                case ".zz":
+                    var level = int.TryParse(Key, out int lvl);
+                    if (!level || lvl <= 0) { return false; }
+                    else
+                    {
+                        FileHandeling fileHandeling1 = new FileHandeling();
+                        fileHandeling1.Create_File_Export();
+                        var newer_Path = fileHandeling1.Import_FileAsync(file);
+                        fileHandeling1.Decipher_ZigZag(lvl, file, newer_Path.Result);
+                    }
+                    return true;
+                case ".rt":
+                    return true;
             }
             return false;
         }

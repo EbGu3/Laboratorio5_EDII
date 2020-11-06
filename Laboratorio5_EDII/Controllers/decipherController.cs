@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Laboratorio5_EDII.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Laboratorio5_EDII.Controllers
 {
@@ -11,13 +13,20 @@ namespace Laboratorio5_EDII.Controllers
         /// </summary>
         ///<response code="200">Archivo descifrado exitosamente</response>
         ///<response code="500">Archivo corrupto</response>
-        /// <param name="method"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Descifrado()
+        public ActionResult Descifrado(Required values)
         {
-
-            return Ok();
+            cipherType cipherType = new cipherType();
+            var cipher = cipherType.Get_Decipher(values.File, values.Key);
+            if (cipher)
+            {
+                return Ok("Archivo cifrado exitosamente.");
+            }
+            else
+            {
+                return StatusCode(500, "Algún parametro se encuentra erroneo.");
+            }
         }
     }
 }
