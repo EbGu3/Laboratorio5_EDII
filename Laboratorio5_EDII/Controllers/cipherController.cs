@@ -18,9 +18,9 @@ namespace Laboratorio5_EDII.Controllers
         {
             cipherType cipherType = new cipherType();
             var cipher = cipherType.Get_Cipher(method,values);
-            var result1 = cipherType.TypeOfFile(values);
-            var result2 = cipherType.ContainsData(values);
-            if (cipher)
+            var file = cipherType.TypeOfFile(values);
+            var fileData = cipherType.ContainsData(values);
+            if (cipher && file && fileData)
             {
 
             }
