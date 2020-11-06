@@ -7,7 +7,7 @@ namespace Lib_Cipher
 {
     public class Cesar
     {
-        public void Cipher_Cesar(string path, string key, bool option, string path_Exported)
+        public void Cipher_Decipher(string path, string key, bool option, string path_Exported)
         {
             int bufferLength = 100;
             var dicctionary = Dicctionary_Cesar(key, option);

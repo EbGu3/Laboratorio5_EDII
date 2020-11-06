@@ -24,6 +24,7 @@ namespace Laboratorio5_EDII.Models
                 Directory.CreateDirectory($"Cipher");
             }
         }
+
         /// <summary>
         /// Create Upload and Decompress files
         /// </summary>
@@ -38,6 +39,7 @@ namespace Laboratorio5_EDII.Models
                 Directory.CreateDirectory($"Decipher");
             }
         }
+
         /// <summary>
         /// Importa el archivo a la carpeta UPLOAD para ser trabajado luego
         /// </summary>
@@ -64,7 +66,7 @@ namespace Laboratorio5_EDII.Models
         {
             Cesar cesar = new Cesar();
             var path_exported = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path) + ".csr");
-            cesar.Cipher_Cesar(path, key, true, path_exported);
+            cesar.Cipher_Decipher(path, key, true, path_exported);
         }
 
         /// <summary>
@@ -76,17 +78,16 @@ namespace Laboratorio5_EDII.Models
         {
             Cesar cesar = new Cesar();
             var path_exported = Path.Combine($"Decipher", Path.GetFileNameWithoutExtension(path) + ".txt");
-            cesar.Cipher_Cesar(path, key, false, path_exported);
+            cesar.Cipher_Decipher(path, key, false, path_exported);
         }
 
         /// <summary>
         /// Cifrado ZigZag
         /// </summary>
-        /// <param name="fileName"></param>
         /// <param name="path"></param>
         /// <param name="levels"></param>
         /// <param name="formFile"></param>
-        public void Cipher_ZigZag(string fileName, string path, int levels, IFormFile formFile)
+        public void Cipher_ZigZag(string path, int levels, IFormFile formFile)
         {
             var fileByte = new byte[formFile.Length];
             var i = 0;
@@ -99,11 +100,35 @@ namespace Laboratorio5_EDII.Models
                 }
             }
             ZigZag zigZag = new ZigZag();
-            var txtDesifrado = zigZag.Cipher_ZigZag(fileByte, levels); 
+            var txtDesifrado = zigZag.Cipher(fileByte, levels); 
             var txtResultado = new byte[1];
             txtResultado = new byte[txtDesifrado.Length];
             txtResultado = txtDesifrado;
             var new_Path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path) + ".zz");
+            save_File(new_Path, txtResultado);
+        }
+
+        /// <summary>
+        /// Desifrado ZigZag
+        /// </summary>
+        public void Decipher_ZigZag(int levels, IFormFile formFile, string path)
+        {
+            var fileByte = new byte[formFile.Length];
+            var i = 0;
+            using (var lectura = new BinaryReader(File.Open(path, FileMode.Open)))
+            {
+                while (lectura.BaseStream.Position != lectura.BaseStream.Length)
+                {
+                    fileByte[i] = lectura.ReadByte();
+                    i++;
+                }
+            }
+            ZigZag zigZag = new ZigZag();
+            var txtCifrado = zigZag.Decipher(fileByte, levels);
+            var txtResultado = new byte[1];
+            txtResultado = new byte[txtCifrado.Length];
+            txtResultado = txtCifrado;
+            var new_Path = Path.Combine($"Decipher", Path.GetFileNameWithoutExtension(path) + ".txt");
             save_File(new_Path, txtResultado);
         }
 
@@ -116,14 +141,6 @@ namespace Laboratorio5_EDII.Models
                     writer.Write(txtResultado);
                 }
             }
-        }
-
-        /// <summary>
-        /// Desifrado ZigZag
-        /// </summary>
-        public void Decipher_ZigZag()
-        {
-
         }
 
         public void Cipher_Route()

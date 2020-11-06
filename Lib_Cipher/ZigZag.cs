@@ -9,7 +9,7 @@ namespace Lib_Cipher
     }
     public class ZigZag
     {
-        public byte[] Cipher_ZigZag(byte[] txt, int levels)
+        public byte[] Cipher(byte[] txt, int levels)
         {
             Dictionary<int, Caracter> level_Dic = new Dictionary<int, Caracter>();
             List<byte> bytes_Exist = new List<byte>();
@@ -114,5 +114,142 @@ namespace Lib_Cipher
 
             return cipherTxt;
         }
-    }
+
+		public byte[] Decipher(byte[] txt, int level)
+		{
+			Dictionary<int, Caracter> level_Dic = new Dictionary<int, Caracter>();
+			int count = 0;
+			while (count < level)
+			{
+				var indexList = new List<byte>();
+				level_Dic.Add(count + 1, new Caracter
+				{
+					Car_List = indexList
+				});
+				count++;
+			}
+			int min = (4 * (level - 1)) + 1;
+			int newUv = (level * 2) - 2;
+			int pic = (level - 2) * 2;
+            int relLenght;
+            if (txt.Length <= min)
+			{
+				relLenght = min;
+			}
+			else
+			{
+				int otherElem = txt.Length - min;
+				int repUv = otherElem / newUv;
+				if (otherElem % newUv != 0)
+				{
+					repUv++;
+				}
+				relLenght = min + (repUv * newUv);
+			}
+			int MaxPic = (relLenght + 1 + pic) / (2 + pic);
+			int midValue = (2 * (MaxPic - 1));
+			int LowPic = MaxPic - 1;
+			int midLevel = level - 2;
+			int auxLevel = midLevel;
+			int countLevel = midValue;
+
+			foreach (var item in txt)
+			{
+				if (MaxPic > 0)
+				{
+					level_Dic.ElementAt(0).Value.Car_List.Add(item);
+					MaxPic--;
+				}
+				else if (MaxPic == 0 && auxLevel > 0)
+				{
+					level_Dic.ElementAt((midLevel - auxLevel) + 1).Value.Car_List.Add(item);
+					countLevel--;
+					if (countLevel == 0 && midLevel > 0)
+					{
+						auxLevel--;
+						countLevel = midValue;
+					}
+				}
+				else if (MaxPic == 0 && auxLevel == 0)
+				{
+					level_Dic.ElementAt(level - 1).Value.Car_List.Add(item);
+				}
+			}
+			var DecipherTxt = new byte[txt.Length];
+
+			var pos = 0;
+			var posLevel = 1;
+			bool elev = false;
+			bool middle = false;
+			var posValueArr = 0;
+			var counter = txt.Length;
+			while (counter > 0)
+			{
+				if (middle)
+				{
+					if (!elev)
+					{
+						DecipherTxt[pos] = level_Dic.ElementAt(posLevel - 1).Value.Car_List.ElementAt(posValueArr * 2);
+						pos++;
+					}
+					else
+					{
+						DecipherTxt[pos] = level_Dic.ElementAt(posLevel - 1).Value.Car_List.ElementAt((posValueArr * 2) + 1);
+						pos++;
+					}
+				}
+				else
+				{
+					DecipherTxt[pos] = level_Dic.ElementAt(posLevel - 1).Value.Car_List.ElementAt(posValueArr);
+					pos++;
+				}
+				if (!elev)
+				{
+					if (posLevel != level)
+					{
+						if (posLevel + 1 == level)
+						{
+							middle = false;
+						}
+						else if (posLevel == 1)
+						{
+							middle = true;
+						}
+						posLevel++;
+					}
+					else
+					{
+						posLevel--;
+						elev = true;
+						middle = true;
+					}
+				}
+				else
+				{
+					if (posLevel != 1)
+					{
+						if (posLevel - 1 == 1)
+						{
+							middle = false;
+							posValueArr++;
+
+						}
+						else if (posLevel == level)
+						{
+							middle = true;
+						}
+						posLevel--;
+					}
+					else
+					{
+						posLevel++;
+						elev = false;
+						middle = true;
+					}
+				}
+				counter--;
+			}
+			return DecipherTxt;
+		}
+	}
 }
