@@ -1,5 +1,6 @@
 ﻿using System;
-using Laboratorio_3_EDII.Manager;
+using System.Text;
+using Lib_Cipher;
 
 namespace CipherConsole
 {
@@ -7,8 +8,6 @@ namespace CipherConsole
     {
         static void Main(string[] args)
         {
-            
-
             
             Console.WriteLine("Cifrado de llave publica");
             Console.WriteLine("************************\n");
@@ -69,8 +68,13 @@ namespace CipherConsole
                     var Column3 = Convert.ToInt16(Console.ReadLine());
                     Console.Write("\n \b Ingrese el texto a cifrar: ");
                     var TextToCipher4 = Console.ReadLine();
-                    //Llamar el metodo
-                    Console.WriteLine($"\n \b Texto cifrado es: {TextToCipher4}");
+                    byte[] bytes = Encoding.ASCII.GetBytes(TextToCipher4);
+                    Route route = new Route();
+                    var TextToCipherRoute = route.Cipher(bytes, Row3, Column3);
+                    var byt = Encoding.ASCII.GetBytes(TextToCipherRoute);
+                    var TextToDecipher = route.Desipher(byt, Row3, Column3).Trim('$');
+                    Console.WriteLine($"\n \b Texto cifrado es: {TextToCipherRoute}");
+                    Console.WriteLine($"\n \b Texto descifrado es: {TextToDecipher}");
                     Console.ReadKey();
                     break;
             }

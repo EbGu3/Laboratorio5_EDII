@@ -143,8 +143,19 @@ namespace Laboratorio5_EDII.Models
             }
         }
 
-        public void Cipher_Route()
+        public void Cipher_Route(int Columns, int Rows, IFormFile formFile, string Path)
         {
+            var fileByte = new byte[formFile.Length];
+            var i = 0;
+            using(var lectura = new BinaryReader(File.Open(Path, FileMode.Open)))
+            {
+                while(lectura.BaseStream.Position != lectura.BaseStream.Length)
+                {
+                    fileByte[i] = lectura.ReadByte();
+                    i++;
+                }
+            }
+            Route route = new Route();
 
         }
 

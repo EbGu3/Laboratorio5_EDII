@@ -7,6 +7,7 @@ namespace Lib_Cipher
     {
         public List<byte> Car_List = new List<byte>();
     }
+
     public class ZigZag
     {
         public byte[] Cipher(byte[] txt, int levels)

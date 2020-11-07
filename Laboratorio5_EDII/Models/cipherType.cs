@@ -14,8 +14,10 @@ namespace Laboratorio5_EDII.Models
         /// <param name="Medodo"></param>
         /// <param name="key"></param>
         /// <param name="file"></param>
+        /// <param name="Columns"></param>
+        /// <param name="Rows"></param>
         /// <returns></returns>
-        public bool Get_Cipher(string Medodo, string key, IFormFile file)
+        public bool Get_Cipher(string Medodo, string key, IFormFile file, int Columns, int Rows)
         {
             if (key is null)
             {
@@ -49,6 +51,7 @@ namespace Laboratorio5_EDII.Models
                             return true;
                         }
                     case "ruta":
+                            
                         return true;
                 }
             }
