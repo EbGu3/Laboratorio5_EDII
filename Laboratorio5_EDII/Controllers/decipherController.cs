@@ -18,7 +18,7 @@ namespace Laboratorio5_EDII.Controllers
         public ActionResult Descifrado(Required values)
         {
             cipherType cipherType = new cipherType();
-            var cipher = cipherType.Get_Decipher(values.File, values.Key);
+            var cipher = cipherType.Get_Decipher(values);
             if (cipher)
             {
                 return Ok("Archivo cifrado exitosamente.");

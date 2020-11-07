@@ -4,11 +4,13 @@ namespace Lib_Cipher
 {
     public class Route
     {
+        #region values Class
         int m { get; set; }
         int n { get; set; }
         string text { get; set; }
 
         char[,] matrix;
+        #endregion
 
         public Route(int m, int n, string text)
         {

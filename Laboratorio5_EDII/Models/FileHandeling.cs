@@ -153,20 +153,42 @@ namespace Laboratorio5_EDII.Models
         /// <param name="route"></param>
         public void Cipher_Route(int m, int n, IFormFile file, string route)
         {
-            Route route1 = new Route(m, n, Get_allText(file));
+            Route routeCipher = new Route(m, n, Get_allText(file));
             if (route.ToLower().Equals("vertical"))
             {
-                route1.Cipher_Vertical();
+                var txt = routeCipher.Cipher_Vertical();
+                var new_path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(file.FileName) + ".rt");
+                var textByte = Encoding.ASCII.GetBytes(txt);
+                save_File(new_path,textByte);
+
             }
             else if (route.ToLower().Equals("espiral"))
             {
-                route1.Cipher_Spiral();
+                var txt = routeCipher.Cipher_Spiral();
+                var new_path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(file.FileName) + ".rt");
+                var textByte = Encoding.ASCII.GetBytes(txt);
+                save_File(new_path, textByte);
             }
         }
 
-        public void Decipher_Route()
+        /// <summary>
+        /// Desifrado tipo Ruta
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
+        /// <param name="file"></param>
+        /// <param name="route"></param>
+        public void Decipher_Route(int m, int n, IFormFile file, string route)
         {
-
+            Route routeCipher = new Route(m, n, Get_allText(file));
+            if (route.ToLower().Equals("vertical"))
+            {
+                routeCipher.decipher_Vertical();
+            }
+            else if (route.ToLower().Equals("espiral"))
+            {
+                routeCipher.Decipher_Spiral();
+            }
         }
 
         /// <summary>
