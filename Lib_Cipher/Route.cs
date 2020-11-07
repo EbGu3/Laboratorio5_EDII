@@ -33,10 +33,13 @@ namespace Lib_Cipher
                 for (int j = 0; j < m; j++)
                 {
                     if (cont != text.Length)
+                    {
                         matrix[j, i] = text[cont];
+                    }
                     else
+                    {
                         matrix[j, i] = '#';
-
+                    }
                     cont++;
                 }
             }
