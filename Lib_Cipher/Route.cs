@@ -277,7 +277,7 @@ namespace Lib_Cipher
             return Result1;
         }
 
-        public string Desipher(byte[] Text, int Rows, int columns)
+        public string Decipher(byte[] Text, int Rows, int columns)
         {
             var Result1 = "";
             List<byte[]> list = new List<byte[]>();

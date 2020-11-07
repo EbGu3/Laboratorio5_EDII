@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.IO;
 using Lib_Cipher;
+using System.Text;
 
 namespace Laboratorio5_EDII.Models
 {
@@ -100,10 +101,10 @@ namespace Laboratorio5_EDII.Models
                 }
             }
             ZigZag zigZag = new ZigZag();
-            var txtDesifrado = zigZag.Cipher(fileByte, levels); 
+            var txtDecifrado = zigZag.Cipher(fileByte, levels); 
             var txtResultado = new byte[1];
-            txtResultado = new byte[txtDesifrado.Length];
-            txtResultado = txtDesifrado;
+            txtResultado = new byte[txtDecifrado.Length];
+            txtResultado = txtDecifrado;
             var new_Path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path) + ".zz");
             save_File(new_Path, txtResultado);
         }
@@ -143,11 +144,11 @@ namespace Laboratorio5_EDII.Models
             }
         }
 
-        public void Cipher_Route(int Columns, int Rows, IFormFile formFile, string Path)
+        public void Cipher_Route(int Columns, int Rows, IFormFile formFile, string path)
         {
             var fileByte = new byte[formFile.Length];
             var i = 0;
-            using(var lectura = new BinaryReader(File.Open(Path, FileMode.Open)))
+            using(var lectura = new BinaryReader(File.Open(path, FileMode.Open)))
             {
                 while(lectura.BaseStream.Position != lectura.BaseStream.Length)
                 {
@@ -156,11 +157,35 @@ namespace Laboratorio5_EDII.Models
                 }
             }
             Route route = new Route();
-
+            var txtDecifrado = route.Cipher(fileByte, Rows, Columns);
+            var txtDecifradoBytes = Encoding.ASCII.GetBytes(txtDecifrado);
+            var txtResultado = new byte[1];
+            txtResultado = new byte[txtDecifradoBytes.Length];
+            txtResultado = txtDecifradoBytes;
+            var new_Path = Path.Combine($"Cipher", Path.GetFileNameWithoutExtension(path) + ".rt");
+            save_File(new_Path, txtResultado);
         }
 
-        public void Decipher_Route()
+        public void Decipher_Route(int Columns, int Rows, IFormFile formFile, string path)
         {
+            var fileByte = new byte[formFile.Length];
+            var i = 0;
+            using(var lectura = new BinaryReader(File.Open(path, FileMode.Open)))
+            {
+                while(lectura.BaseStream.Position != lectura.BaseStream.Length)
+                {
+                    fileByte[i] = lectura.ReadByte();
+                    i++;
+                }
+            }
+            Route route = new Route();
+            var txtCifrado = route.Decipher(fileByte, Rows, Columns);
+            var txtCifradoBytes = Encoding.ASCII.GetBytes(txtCifrado);
+            var txtResultado = new byte[1];
+            txtResultado = new byte[txtCifradoBytes.Length];
+            txtResultado = txtCifradoBytes;
+            var new_Path = Path.Combine($"Decipher", Path.GetFileNameWithoutExtension(path) + ".txt");
+            save_File(new_Path, txtResultado);
 
         }
     }

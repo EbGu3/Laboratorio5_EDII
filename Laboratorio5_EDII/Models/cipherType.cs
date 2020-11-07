@@ -51,8 +51,16 @@ namespace Laboratorio5_EDII.Models
                             return true;
                         }
                     case "ruta":
-                            
-                        return true;
+                        if((Columns) < 0 || (Rows < 0)) { return false; }
+                        else
+                        {
+                            FileHandeling fileHandeling = new FileHandeling();
+                            fileHandeling.Create_File_Import();
+                            var new_Path = fileHandeling.Import_FileAsync(file);
+                            fileHandeling.Cipher_Route(Columns, Rows, file, new_Path.Result);
+                            return true;
+                        }
+
                 }
             }
             return false;
@@ -64,7 +72,7 @@ namespace Laboratorio5_EDII.Models
         /// <param name="file"></param>
         /// <param name="Key"></param>
         /// <returns></returns>
-        public bool Get_Decipher(IFormFile file, string Key)
+        public bool Get_Decipher(IFormFile file, string Key, int Colums, int Rows)
         {
             var extention = Path.GetExtension(file.FileName);
             switch (extention)
@@ -87,6 +95,14 @@ namespace Laboratorio5_EDII.Models
                     }
                     return true;
                 case ".rt":
+                    if ((Colums < 0) || (Rows < 0)) { return false; }
+                    else
+                    {
+                        FileHandeling fileHandeling1 = new FileHandeling();
+                        fileHandeling1.Create_File_Export();
+                        var newer_Path = fileHandeling1.Import_FileAsync(file);
+                        fileHandeling1.Decipher_Route(Colums, Rows, file, newer_Path.Result);
+                    }
                     return true;
             }
             return false;

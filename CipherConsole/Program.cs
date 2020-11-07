@@ -72,7 +72,7 @@ namespace CipherConsole
                     Route route = new Route();
                     var TextToCipherRoute = route.Cipher(bytes, Row3, Column3);
                     var byt = Encoding.ASCII.GetBytes(TextToCipherRoute);
-                    var TextToDecipher = route.Desipher(byt, Row3, Column3).Trim('$');
+                    var TextToDecipher = route.Decipher(byt, Row3, Column3).Trim('$');
                     Console.WriteLine($"\n \b Texto cifrado es: {TextToCipherRoute}");
                     Console.WriteLine($"\n \b Texto descifrado es: {TextToDecipher}");
                     Console.ReadKey();
